@@ -1,25 +1,28 @@
 ## The Model
 
 At each timestep state of the model described by
-1. x coordinate
-2. y coordinate
-3. phi - angle between x-axis and vehicle heading direction
-4. v - speed of the vehicle
-5. cte - distance from reference trajectory f(x) and y
-6. ephi - difference between phi and reference trajectory orientation (which is calculated as a the tangential angle
+1. *x* coordinate
+2. *y* coordinate
+3. *phi* - angle between x-axis and vehicle heading direction
+4. *v* - speed of the vehicle
+5. *cte* - distance from reference trajectory f(x) and y
+6. *ephi* - difference between phi and reference trajectory orientation (which is calculated as a the tangential angle
 of the ref trajectory f evaluated at x = arctan(f'(x)) )
                                                                                                 ​                                                                                                ​​
 and 2 actuator values
-7. delta, Steering angle
-8. a, Throttle ( from -1 to 1). Negative value means we hit on break.
+1. *delta*, Steering angle
+2. *a*, Throttle ( from -1 to 1). Negative value means we hit on break.
 
 The transition between states T=0 and T+1=1 (time elapsed between states is dt) is described by a set of equations:
-x1 = x0 + v0 * cos(phi0) * dt;
-y1 = y0 + v0 * sin(phi0) * dt;
-phi1 = phi0 + v0 / Lf * delta0 * dt;
-v1 = v0 + a * dt;
-cte1 = v0 + sin(ephi0) * dt;
-ephi1 = ephi0 + v0 / Lf * delta0 * dt
+
+```
+    x1 = x0 + v0 * cos(phi0) * dt;
+    y1 = y0 + v0 * sin(phi0) * dt;
+    phi1 = phi0 + v0 / Lf * delta0 * dt;
+    v1 = v0 + a * dt;
+    cte1 = v0 + sin(ephi0) * dt;
+    ephi1 = ephi0 + v0 / Lf * delta0 * dt
+```
 
 ## Timestep Length and Elapsed Duration (N & dt)
 
