@@ -7,14 +7,10 @@
 #include "MPCController.h"
 #include "CostAndConstraintsCalculator.h"
 
-const double CTEAbsValueWeight = 1000.0;
-const double PsiErrorAbsValueWeight = 1000.0;
-const double SteeringAngleAbsValueWeight = 20.0;
-const double ThrottleAbsValueWeight = 20.0;
-const double SteeringAngleDiffWeight = 100.0;
-const double ThrottleDiffValueWeight = 20.0;
+const double CTEAbsValueWeight = 100.0;
+const double PsiErrorAbsValueWeight = 100.0;
 
-        void CostAndConstraintsCalculator::operator()(ADvector& fg, const ADvector& x)
+void CostAndConstraintsCalculator::operator()(ADvector& fg, const ADvector& x)
 {
     fg[0] = CalculateCost(x);
 
@@ -75,8 +71,8 @@ AD<double> CostAndConstraintsCalculator::PenaliseForJerks(const ADvector &vars) 
     AD<double> cost = 0.0;
     for (int t = 0; t < N - 2; t++)
     {
-        cost += pow(vars[steeringAngleStartingIndex + t + 1] - vars[steeringAngleStartingIndex + t], 2) * SteeringAngleDiffWeight;
-        cost += pow(vars[throttleStartingIndex + t + 1] - vars[throttleStartingIndex + t], 2)  * ThrottleDiffValueWeight;
+        cost += pow(vars[steeringAngleStartingIndex + t + 1] - vars[steeringAngleStartingIndex + t], 2);
+        cost += pow(vars[throttleStartingIndex + t + 1] - vars[throttleStartingIndex + t], 2);
     }
     return cost;
 }
@@ -86,8 +82,8 @@ AD<double> CostAndConstraintsCalculator::PenaliseForLargeActuatorValues(const AD
     AD<double> cost = 0.0;
     for (int t = 0; t < N - 1; t++)
     {
-        cost += pow(vars[steeringAngleStartingIndex + t], 2) * SteeringAngleAbsValueWeight;
-        cost += pow(vars[throttleStartingIndex + t], 2) * ThrottleAbsValueWeight;
+        cost += pow(vars[steeringAngleStartingIndex + t], 2);
+        cost += pow(vars[throttleStartingIndex + t], 2);
     }
     return cost;
 }

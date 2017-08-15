@@ -57,5 +57,6 @@ To get optimal steering & throttle values for next N steps I did the following:
 2. Set optimization constraints: state_expected (calculated starting from state 0, using formulas from above) - state_given_by_optimizer = 0
 3. Set variable constraints so that steering_angle and throttle stay in defined ranges
 4. Set cost computation to penalize for CTE & ephi (errors), slow speed, large values of throttle and steering.
+5. Set weights for different components of cost to make sticking to ref path (keeping low errors) more preferable for optimization algorithm
 
 
